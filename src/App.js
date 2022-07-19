@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { CheckoutDataProvider } from "./context/checkoutDataContext";
+import { FormProvider } from "context/formContext";
+import { GlobalStyle } from "./globalStyles";
+import { Checkout, Error } from "./pages";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <FormProvider>
+        <CheckoutDataProvider>
+          <GlobalStyle />
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<Navigate replace to="/checkout" />}
+            />
+            <Route exact path="/checkout" element={<Checkout />} />
+            <Route exact path="/error" element={<Error />} />
+          </Routes>
+        </CheckoutDataProvider>
+      </FormProvider>
+    </Router>
   );
-}
+};
 
 export default App;
